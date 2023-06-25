@@ -829,6 +829,8 @@ PARAM_DEFINE_FLOAT(MPC_TKO_RAMP_T, 3.0f);
  * @value 0 Simple position control
  * @value 3 Smooth position control (Jerk optimized)
  * @value 4 Acceleration based input
+ * @value 5 Continues Yaw
+ * @value 2 Sail Mode
  * @group Multicopter Position Control
  */
 PARAM_DEFINE_INT32(MPC_POS_MODE, 4);
@@ -896,3 +898,9 @@ PARAM_DEFINE_FLOAT(MPC_XY_VEL_ALL, -10.0f);
  * @group Multicopter Position Control
  */
 PARAM_DEFINE_FLOAT(MPC_Z_VEL_ALL, -3.0f);
+
+
+
+
+
+

@@ -48,6 +48,8 @@ list(APPEND flight_tasks_all
 	ManualPosition
 	ManualPositionSmoothVel
 	Transition
+	ContinuousYaw
+	SailMode
 )
 
 if(NOT px4_constrained_flash_build)

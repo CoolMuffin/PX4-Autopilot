@@ -205,6 +205,15 @@ void FlightModeManager::start_flight_task()
 			error = switchTask(FlightTaskIndex::ManualPosition);
 			break;
 
+		case 5:
+			error = switchTask(FlightTaskIndex::ContinuousYaw);
+			break;
+
+		case 2:
+			error = switchTask(FlightTaskIndex::SailMode);
+			break;
+
+
 		case 3:
 			error = switchTask(FlightTaskIndex::ManualPositionSmoothVel);
 			break;

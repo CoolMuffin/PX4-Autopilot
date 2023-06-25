@@ -71,7 +71,7 @@
 
 #include <matrix/matrix/math.hpp>
 
-#include "ActuatorEffectiveness/ActuatorEffectiveness.hpp"
+#include "control_allocator/ActuatorEffectiveness/ActuatorEffectiveness.hpp"
 
 class ControlAllocation
 {
