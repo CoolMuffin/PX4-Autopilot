@@ -1,0 +1,71 @@
+[1mdiff --git a/src/modules/flight_mode_manager/tasks/SailMode/FlightTaskSailMode.cpp b/src/modules/flight_mode_manager/tasks/SailMode/FlightTaskSailMode.cpp[m
+[1mindex e22857e174..01c1690139 100644[m
+[1m--- a/src/modules/flight_mode_manager/tasks/SailMode/FlightTaskSailMode.cpp[m
+[1m+++ b/src/modules/flight_mode_manager/tasks/SailMode/FlightTaskSailMode.cpp[m
+[36m@@ -1,6 +1,13 @@[m
+[31m-// custom flight task that takes input from the rc controller roll and pitch and uses it to directly control the motors.[m
+[31m-// it's a mode that will be used with a hybrid drone that can sail on water surface. So when roll is <0, then the rigth motors activate[m
+[31m-// to make it turn right for example.[m
+[32m+[m[32m/***************************************************************************************************************************[m
+[32m+[m[32m *[m
+[32m+[m[32m * want to control a drone that has landed on water and has its motors turned 90 degrees manually to act like a hovercraft. The control logic you want to implement is:[m
+[32m+[m[32m *   When the stickRoll is -1 (left), the right motor activates at a certain speed.[m
+[32m+[m[32m * When the stickRoll is +1 (right), the left motor activates at a certain speed.[m
+[32m+[m[32m * This will allow the drone to navigate on water using different motors than the ones used when flying.[m
+[32m+[m[32m *[m
+[32m+[m[32m *[m
+[32m+[m[32m * ********************************************************/[m
+[32m+[m
+ [m
+ [m
+ #include "FlightTaskSailMode.hpp"[m
+[36m@@ -30,16 +37,11 @@[m [mbool FlightTaskSailMode::activate(const trajectory_setpoint_s& last_setpoint)[m
+ [m
+ [m
+ [m
+[31m-[m
+[31m-[m
+[31m-[m
+ bool FlightTaskSailMode::update()[m
+ {[m
+ [m
+   float x = _sticks.getRollExpo();[m
+   float y = _sticks.getPitch();[m
+[31m-    // Check for updated stick inputs[m
+[31m-    if (_sticks.checkAndUpdateStickInputs()) {[m
+         // Get processed stick inputs[m
+         //matrix::Vector4f stick_positions = _sticks.getPositionExpo();[m
+ [m
+[36m@@ -59,8 +61,8 @@[m [mbool FlightTaskSailMode::update()[m
+         }[m
+ [m
+         // Set actuator setpoints[m
+[31m-        _control_allocation.setActuatorSetpoint(_actuator_setpoints);[m
+[31m-    }[m
+[32m+[m[32m        //_control_allocation.setActuatorSetpoint(_actuator_setpoints);[m
+[32m+[m
+ [m
+     return true;[m
+ }[m
+[1mdiff --git a/src/modules/flight_mode_manager/tasks/SailMode/FlightTaskSailMode.hpp b/src/modules/flight_mode_manager/tasks/SailMode/FlightTaskSailMode.hpp[m
+[1mindex 3cfddc2298..f0b3137501 100644[m
+[1m--- a/src/modules/flight_mode_manager/tasks/SailMode/FlightTaskSailMode.hpp[m
+[1m+++ b/src/modules/flight_mode_manager/tasks/SailMode/FlightTaskSailMode.hpp[m
+[36m@@ -23,7 +23,7 @@[m
+ class FlightTaskSailMode : public FlightTask[m
+ {[m
+ public:[m
+[31m-    FlightTaskSailMode(ControlAllocation& control_allocation) : _control_allocation(control_allocation) {} // Pass ControlAllocation object in constructor[m
+[32m+[m[32m    //FlightTaskSailMode(ControlAllocation& control_allocation) : _control_allocation(control_allocation) {} // Pass ControlAllocation object in constructor[m
+     FlightTaskSailMode() = default;[m
+     virtual ~FlightTaskSailMode() = default;[m
+ [m
+[36m@@ -32,7 +32,7 @@[m [mpublic:[m
+     bool activate(const trajectory_setpoint_s& last_setpoint) override;[m
+ [m
+ private:[m
+[31m-    ControlAllocation& _control_allocation;[m
+[32m+[m[32m    //ControlAllocation& _control_allocation;[m
+     float _origin_z{0.f};[m
+     matrix::Vector<float, 16> _actuator_setpoints{};[m
+     Sticks _sticks{this}; // Declare a Sticks object[m

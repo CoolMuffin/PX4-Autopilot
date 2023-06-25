@@ -23,7 +23,7 @@
 class FlightTaskSailMode : public FlightTask
 {
 public:
-    FlightTaskSailMode(ControlAllocation& control_allocation) : _control_allocation(control_allocation) {} // Pass ControlAllocation object in constructor
+    //FlightTaskSailMode(ControlAllocation& control_allocation) : _control_allocation(control_allocation) {} // Pass ControlAllocation object in constructor
     FlightTaskSailMode() = default;
     virtual ~FlightTaskSailMode() = default;
 
@@ -32,7 +32,7 @@ public:
     bool activate(const trajectory_setpoint_s& last_setpoint) override;
 
 private:
-    ControlAllocation& _control_allocation;
+    //ControlAllocation& _control_allocation;
     float _origin_z{0.f};
     matrix::Vector<float, 16> _actuator_setpoints{};
     Sticks _sticks{this}; // Declare a Sticks object

@@ -1,6 +1,13 @@
-// custom flight task that takes input from the rc controller roll and pitch and uses it to directly control the motors.
-// it's a mode that will be used with a hybrid drone that can sail on water surface. So when roll is <0, then the rigth motors activate
-// to make it turn right for example.
+/***************************************************************************************************************************
+ *
+ * want to control a drone that has landed on water and has its motors turned 90 degrees manually to act like a hovercraft. The control logic you want to implement is:
+ *   When the stickRoll is -1 (left), the right motor activates at a certain speed.
+ * When the stickRoll is +1 (right), the left motor activates at a certain speed.
+ * This will allow the drone to navigate on water using different motors than the ones used when flying.
+ *
+ *
+ * ********************************************************/
+
 
 
 #include "FlightTaskSailMode.hpp"
@@ -30,16 +37,11 @@ bool FlightTaskSailMode::activate(const trajectory_setpoint_s& last_setpoint)
 
 
 
-
-
-
 bool FlightTaskSailMode::update()
 {
 
   float x = _sticks.getRollExpo();
   float y = _sticks.getPitch();
-    // Check for updated stick inputs
-    if (_sticks.checkAndUpdateStickInputs()) {
         // Get processed stick inputs
         //matrix::Vector4f stick_positions = _sticks.getPositionExpo();
 
@@ -59,8 +61,8 @@ bool FlightTaskSailMode::update()
         }
 
         // Set actuator setpoints
-        _control_allocation.setActuatorSetpoint(_actuator_setpoints);
-    }
+        //_control_allocation.setActuatorSetpoint(_actuator_setpoints);
+
 
     return true;
 }
