@@ -5,35 +5,32 @@
 #include "flight_mode_manager/tasks/Utility/Sticks.hpp"
 #include "control_allocator/ControlAllocation/ControlAllocation.hpp"
 #include "control_allocator/ActuatorEffectiveness/ActuatorEffectiveness.hpp"
+#include <uORB/topics/actuator_motors.h>
 
-
-//   class ContAll : public ControlAllocation {
-//   public:
-//       ContAll() = default;
-//       virtual ~ContAll() = default;
-// 	static constexpr uint8_t NUM_ACTUATORS = ActuatorEffectiveness::NUM_ACTUATORS;
-// 	static constexpr uint8_t NUM_AXES = ActuatorEffectiveness::NUM_AXES;
-
-// 	typedef matrix::Vector<float, NUM_ACTUATORS> ActuatorVector;
-
-//  };
 
 
 
 class FlightTaskSailMode : public FlightTask
 {
 public:
-    //FlightTaskSailMode(ControlAllocation& control_allocation) : _control_allocation(control_allocation) {} // Pass ControlAllocation object in constructor
     FlightTaskSailMode() = default;
     virtual ~FlightTaskSailMode() = default;
-
+    virtual void dummySetpoints();
+    virtual void saturate();
+    virtual void motorRollMapping();
+    virtual void motorPitchMapping();
+    virtual void motorkill();
     bool update() override;
     bool updateInitialize() override;
     bool activate(const trajectory_setpoint_s& last_setpoint) override;
 
 private:
-    //ControlAllocation& _control_allocation;
-    float _origin_z{0.f};
-    matrix::Vector<float, 16> _actuator_setpoints{};
+    orb_advert_t _actuators_0_pub = nullptr; // Add this line to declare the uORB publisher
+    struct actuator_motors_s _actuators {}; // Actuator controls
+    float k_p = 0.5; //proportional gain
+    float x = 0.0; //stick roll input
+    float y = 0.0; //stick pitch input
+    uORB::Subscription _actuator_motors_sub{ORB_ID(actuator_motors)}; // Declare the subscription object
+    struct actuator_motors_s _updated_motors; // Declare the structure to hold the data
     Sticks _sticks{this}; // Declare a Sticks object
 };
